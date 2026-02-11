@@ -1,3 +1,14 @@
+<?php 
+include 'config.php'; 
+
+// Consultar pacientes
+$res_pazienti = $conn->query("SELECT * FROM pazienti");
+
+// Consultar doctores
+$res_dottore = $conn->query("SELECT * FROM dottore");
+?>
+<!DOCTYPE html>
+<html lang="es">
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -45,19 +56,50 @@
                 <h1 class="display-5 fw-bold text-primary">Lista de Pazienti</h1>
                 <table class="table table-hover mt-4">
                     <thead>
-                        <tr><th>ID</th><th>Nombre</th><th>Estado</th></tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Email</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>#001</td><td>Mario Rossi</td><td><span class="badge bg-success">Estable</span></td></tr>
+                        <?php while($row = $res_pazienti->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo $row['idtable1']; ?></td>
+                            <td><?php echo $row['nome']; ?></td>
+                            <td><?php echo $row['cognome']; ?></td>
+                            <td><?php echo $row['email']; ?></td>
+                        </tr>
+                        <?php endwhile; ?>
                     </tbody>
                 </table>
             </div>
         </div>
 
         <div id="professionisti" class="content-section d-none">
-            <div class="container bg-white p-5 shadow-sm rounded-4 text-center">
+            <div class="container bg-white p-5 shadow-sm rounded-4">
                 <h1 class="display-5 fw-bold text-dark">Professionisti</h1>
-                <p>Gestión del equipo médico.</p>
+                <table class="table table-hover mt-4">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Dr. Nome</th>
+                            <th>Email</th>
+                            <th>Partita IVA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($doc = $res_dottore->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo $doc['iddottore']; ?></td>
+                            <td><?php echo $doc['nome'] . " " . $doc['cognome']; ?></td>
+                            <td><?php echo $doc['email']; ?></td>
+                            <td><?php echo $doc['partita_iva']; ?></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
 
