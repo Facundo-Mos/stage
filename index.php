@@ -6,7 +6,44 @@ $res_pazienti = $conn->query("SELECT * FROM pazienti");
 
 // Consultar doctores
 $res_dottore = $conn->query("SELECT * FROM dottore");
+
+
+include 'config.php'; // Usa solo uno, asegúrate que este sea el correcto
+
+if (isset($_POST['btn_guardar'])) {
+    // Recibimos los datos
+    $nome = $_POST['nome'];
+    $cognome = $_POST['cognome'];
+    $data = $_POST['data_nascita'];
+    $luogo = $_POST['luogo'];
+    $indirizzo = $_POST['indirizzo'];
+    $cap = $_POST['cap'];
+    $cell = $_POST['cellulare'];
+    $cf = $_POST['codice_fiscale'];
+    $email = $_POST['email'];
+
+    // Lógica para ID manual
+    $sql_id = "SELECT MAX(idpazienti) as ultimo FROM pazienti";
+    $res_id = $conn->query($sql_id);
+    $row_id = $res_id->fetch_assoc();
+    $nuevo_id = ($row_id['ultimo']) ? $row_id['ultimo'] + 1 : 1;
+
+    // La consulta INSERT (Asegúrate que termine en ";)
+    $query = "INSERT INTO pazienti (idpazienti, nome, cognome, data_di_nascita, luogo_di_nascita, indirizzo_di_residenza, cap, cellulare, codice_fiscale, email) 
+                VALUES ($nuevo_id, '$nome', '$cognome', '$data', '$luogo', '$indirizzo', '$cap', '$cell', '$cf', '$email')";
+
+    if ($conn->query($query)) {
+        echo "<script>alert('¡Paciente guardado!'); window.location='index.php';</script>";
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
+
+// Consultas para mostrar en las tablas (siempre después del INSERT)
+$res_pazienti = $conn->query("SELECT * FROM pazienti");
+$res_dottore = $conn->query("SELECT * FROM dottore");
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <!DOCTYPE html>
@@ -53,29 +90,88 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
 
         <div id="pazienti" class="content-section d-none">
             <div class="container bg-white p-5 shadow-sm rounded-4">
-                <h1 class="display-5 fw-bold text-primary">Lista de Pazienti</h1>
-                <table class="table table-hover mt-4">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while($row = $res_pazienti->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo $row['idtable1']; ?></td>
-                            <td><?php echo $row['nome']; ?></td>
-                            <td><?php echo $row['cognome']; ?></td>
-                            <td><?php echo $row['email']; ?></td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            </div>
+                
+                <h1 class="display-5 fw-bold text-primary mb-4">Gestión de Pacientes</h1>
+                
+                <div class="card mb-5 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Añadir Nuevo Paciente</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="POST" class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" name="nome" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Apellido</label>
+                                <input type="text" name="cognome" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Fecha de Nacimiento</label>
+                                <input type="date" name="data_nascita" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Código Fiscal</label>
+                                <input type="text" name="codice_fiscale" class="form-control" maxlength="16" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Lugar de Nacimiento</label>
+                                <input type="text" name="luogo" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Dirección</label>
+                                <input type="text" name="indirizzo" class="form-control" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">CAP</label>
+                                <input type="text" name="cap" class="form-control" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Celular</label>
+                                <input type="text" name="cellulare" class="form-control" required>
+                            </div>
+                            
+                            <div class="col-12 text-end">
+                                <button type="submit" name="btn_guardar" class="btn btn-success">Guardar Paciente</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+
+                <h2 class="h4 fw-bold mb-3">Pacientes Registrados</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover mt-4">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while($row = $res_pazienti->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo $row['idpazienti']; ?></td>
+                                <td><?php echo $row['nome']; ?></td>
+                                <td><?php echo $row['cognome']; ?></td>
+                                <td><?php echo $row['email']; ?></td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
         </div>
+
+            <a href="javascript:void(0)" class="nav-link" onclick="showPage('pazienti', this)">Pacientes</a>`
+
 
         <div id="professionisti" class="content-section d-none">
             <div class="container bg-white p-5 shadow-sm rounded-4">

@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`dottore` (
   `partita_iva` VARCHAR(45) NULL,
   `pazienti_idtable1` INT NOT NULL,
   PRIMARY KEY (`iddottore`),
-  INDEX `fk_dottore_pazienti_idx` (`pazienti_idtable1` ASC) VISIBLE,
+  INDEX `fk_dottore_pazienti_idx` (`pazienti_idtable1` ASC) ,
   CONSTRAINT `fk_dottore_pazienti`
     FOREIGN KEY (`pazienti_idtable1`)
     REFERENCES `mydb`.`pazienti` (`idtable1`)
