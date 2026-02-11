@@ -1,0 +1,81 @@
+body {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 280px;
+    background-color: #212529;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.logo-section {
+    padding: 20px 0 40px;
+    border-bottom: 1px solid #3d4145;
+    margin-bottom: 20px;
+}
+
+.logo-icon { font-size: 50px; }
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 25px;
+    color: #adb5bd;
+    cursor: pointer;
+    transition: 0.2s;
+    border-left: 4px solid transparent;
+}
+
+.nav-item:hover, .nav-item.active {
+    background-color: #2c3034;
+    color: #fff;
+    border-left-color: #0dcaf0;
+}
+
+.nav-item span { margin-right: 15px; }
+
+.main-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    padding: 40px;
+}
+
+/* --- GRID DEL CALENDARIO --- */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.day-name {
+    font-weight: bold;
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.8rem;
+    padding-bottom: 10px;
+}
+
+.day {
+    aspect-ratio: 1 / 1;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+.day:hover { background-color: #e9ecef; }
+
+.day.today {
+    border: 2px solid #0dcaf0;
+    background-color: #f0fbff;
+}
+
+.day.empty { border: none; background: transparent; }
