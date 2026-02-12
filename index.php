@@ -136,7 +136,7 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
                                 <input type="text" name="luogo" class="form-control" required>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Indirizzo</label>
+                                <label class="form-label">Residenza</label>
                                 <input type="text" name="indirizzo" class="form-control" required>
                             </div>
                             <div class="col-md-2">
@@ -154,9 +154,7 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
                         </form>
                     </div>
                 </div>
-
                 <hr class="my-5">
-
                 <h2 class="h4 fw-bold mb-3"> Pazienti Registrati</h2>
                 <div class="table-responsive">
                     <table class="table table-hover mt-4">
@@ -181,10 +179,6 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
                     </table>
                 </div>
         </div>
-
-            <a href="javascript:void(0)" class="nav-link" onclick="showPage('pazienti', this)">Pazienti</a>`
-
-
         <div id="professionisti" class="content-section d-none">
             <div class="container bg-white p-5 shadow-sm rounded-4">
                 <h1 class="display-5 fw-bold text-dark">Professionisti</h1>
