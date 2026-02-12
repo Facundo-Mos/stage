@@ -1,17 +1,26 @@
 <?php 
 include 'config.php'; 
 
-// Consultar pacientes
+// ===============================
+// Recuperare l'elenco dei pazienti
+// ===============================
 $res_pazienti = $conn->query("SELECT * FROM pazienti");
 
-// Consultar doctores
+// ===============================
+// Recuperare l'elenco dei dottori
+// ===============================
 $res_dottore = $conn->query("SELECT * FROM dottore");
 
 
-include 'config.php'; // Usa solo uno, asegúrate que este sea el correcto
+include 'config.php'; 
+
+
+// ===============================
+// Salvataggio di un nuovo paziente
+// ===============================
 
 if (isset($_POST['btn_guardar'])) {
-    // Recibimos los datos
+    // Riceviamo i dati
     $nome = $_POST['nome'];
     $cognome = $_POST['cognome'];
     $data = $_POST['data_nascita'];
@@ -22,16 +31,17 @@ if (isset($_POST['btn_guardar'])) {
     $cf = $_POST['codice_fiscale'];
     $email = $_POST['email'];
 
-    // Lógica para ID manual
+    // Generazione manuale dell'ID (ultimo ID + 1)
     $sql_id = "SELECT MAX(idpazienti) as ultimo FROM pazienti";
     $res_id = $conn->query($sql_id);
     $row_id = $res_id->fetch_assoc();
     $nuevo_id = ($row_id['ultimo']) ? $row_id['ultimo'] + 1 : 1;
 
-    // La consulta INSERT (Asegúrate que termine en ";)
+    // Query di inserimento nel database
     $query = "INSERT INTO pazienti (idpazienti, nome, cognome, data_di_nascita, luogo_di_nascita, indirizzo_di_residenza, cap, cellulare, codice_fiscale, email) 
                 VALUES ($nuevo_id, '$nome', '$cognome', '$data', '$luogo', '$indirizzo', '$cap', '$cell', '$cf', '$email')";
 
+    // Esecuzione della quer
     if ($conn->query($query)) {
         echo "<script>alert('¡Paciente guardado!'); window.location='index.php';</script>";
     } else {
@@ -39,7 +49,9 @@ if (isset($_POST['btn_guardar'])) {
     }
 }
 
-// Consultas para mostrar en las tablas (siempre después del INSERT)
+// ===============================
+// Aggiornare le liste dopo l'inserimento
+// ===============================
 $res_pazienti = $conn->query("SELECT * FROM pazienti");
 $res_dottore = $conn->query("SELECT * FROM dottore");
 ?>
@@ -100,19 +112,19 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
                     <div class="card-body">
                         <form action="" method="POST" class="row g-3">
                             <div class="col-md-4">
-                                <label class="form-label">Nombre</label>
+                                <label class="form-label">Nome</label>
                                 <input type="text" name="nome" class="form-control" required>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Apellido</label>
+                                <label class="form-label">Cognome</label>
                                 <input type="text" name="cognome" class="form-control" required>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Fecha de Nacimiento</label>
+                                <label class="form-label">Data di Nascita</label>
                                 <input type="date" name="data_nascita" class="form-control" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Código Fiscal</label>
+                                <label class="form-label">Codice Fiscale</label>
                                 <input type="text" name="codice_fiscale" class="form-control" maxlength="16" required>
                             </div>
                             <div class="col-md-6">
@@ -120,11 +132,11 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
                                 <input type="email" name="email" class="form-control">
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Lugar de Nacimiento</label>
+                                <label class="form-label">Luogo di Nascita</label>
                                 <input type="text" name="luogo" class="form-control" required>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Dirección</label>
+                                <label class="form-label">Indirizzo</label>
                                 <input type="text" name="indirizzo" class="form-control" required>
                             </div>
                             <div class="col-md-2">
@@ -132,7 +144,7 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
                                 <input type="text" name="cap" class="form-control" required>
                             </div>
                             <div class="col-md-2">
-                                <label class="form-label">Celular</label>
+                                <label class="form-label">Cellulare</label>
                                 <input type="text" name="cellulare" class="form-control" required>
                             </div>
                             
@@ -145,14 +157,14 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
 
                 <hr class="my-5">
 
-                <h2 class="h4 fw-bold mb-3">Pacientes Registrados</h2>
+                <h2 class="h4 fw-bold mb-3"> Pazienti Registrati</h2>
                 <div class="table-responsive">
                     <table class="table table-hover mt-4">
                         <thead class="table-light">
                             <tr>
                                 <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
+                                <th>Nome</th>
+                                <th>Cognome</th>
                                 <th>Email</th>
                             </tr>
                         </thead>
@@ -170,7 +182,7 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
                 </div>
         </div>
 
-            <a href="javascript:void(0)" class="nav-link" onclick="showPage('pazienti', this)">Pacientes</a>`
+            <a href="javascript:void(0)" class="nav-link" onclick="showPage('pazienti', this)">Pazienti</a>`
 
 
         <div id="professionisti" class="content-section d-none">
