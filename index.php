@@ -1,47 +1,41 @@
 <?php 
 include 'config.php'; 
 
-// ===============================
-// Recuperare l'elenco dei pazienti
-// ===============================
-$res_pazienti = $conn->query("SELECT * FROM pazienti");
+// ===========================================
+// 1. Recuperar listas (Nombres de tabla actualizados)
+// ===========================================
+$res_pazienti = $conn->query("SELECT * FROM anagrafica_pazienti");
+$res_dottore  = $conn->query("SELECT * FROM anagrafica_dottori");
 
-// ===============================
-// Recuperare l'elenco dei dottori
-// ===============================
-$res_dottore = $conn->query("SELECT * FROM dottore");
-
-
-include 'config.php'; 
-
-
-// ===============================
-// Salvataggio di un nuovo paziente
-// ===============================
-
+// ===========================================
+// 2. Salvataggio di un nuovo paziente
+// ===========================================
 if (isset($_POST['btn_guardar'])) {
-    // Riceviamo i dati
-    $nome = $_POST['nome'];
-    $cognome = $_POST['cognome'];
-    $data = $_POST['data_nascita'];
-    $luogo = $_POST['luogo'];
-    $indirizzo = $_POST['indirizzo'];
-    $cap = $_POST['cap'];
-    $cell = $_POST['cellulare'];
-    $cf = $_POST['codice_fiscale'];
-    $email = $_POST['email'];
+    // Recibimos los datos del formulario
+    $nome     = $_POST['nome'];
+    $cognome  = $_POST['cognome'];
+    $data     = $_POST['data_nascita'];
+    $luogo    = $_POST['luogo'];
+    $indirizzo= $_POST['indirizzo'];
+    $cap      = $_POST['cap'];
+    $cell     = $_POST['cellulare'];
+    $cf       = $_POST['codice_fiscale'];
+    $email    = $_POST['email'];
 
-    // Generazione manuale dell'ID (ultimo ID + 1)
-    $sql_id = "SELECT MAX(idpazienti) as ultimo FROM pazienti";
+    // Generación manual del ID para 'anagrafica_pazienti'
+    // Nota: El campo ahora parece llamarse 'id' o 'idpazienti', verifica en tu DB.
+    // Asumiré que se mantiene 'idpazienti' según tu lógica anterior.
+    $sql_id = "SELECT MAX(idpazienti) as ultimo FROM anagrafica_pazienti";
     $res_id = $conn->query($sql_id);
     $row_id = $res_id->fetch_assoc();
     $nuevo_id = ($row_id['ultimo']) ? $row_id['ultimo'] + 1 : 1;
 
-    // Query di inserimento nel database
-    $query = "INSERT INTO pazienti (idpazienti, nome, cognome, data_di_nascita, luogo_di_nascita, indirizzo_di_residenza, cap, cellulare, codice_fiscale, email) 
-                VALUES ($nuevo_id, '$nome', '$cognome', '$data', '$luogo', '$indirizzo', '$cap', '$cell', '$cf', '$email')";
+    // Query de inserción actualizada
+    $query = "INSERT INTO anagrafica_pazienti 
+                (idpazienti, nome, cognome, data_di_nascita, luogo_di_nascita, indirizzo_di_residenza, cap, cellulare, codice_fiscale, email) 
+                VALUES 
+                ($nuevo_id, '$nome', '$cognome', '$data', '$luogo', '$indirizzo', '$cap', '$cell', '$cf', '$email')";
 
-    // Esecuzione della quer
     if ($conn->query($query)) {
         echo "<script>alert('¡Paciente guardado!'); window.location='index.php';</script>";
     } else {
@@ -49,11 +43,9 @@ if (isset($_POST['btn_guardar'])) {
     }
 }
 
-// ===============================
-// Aggiornare le liste dopo l'inserimento
-// ===============================
-$res_pazienti = $conn->query("SELECT * FROM pazienti");
-$res_dottore = $conn->query("SELECT * FROM dottore");
+// Actualizar variables para la vista
+$res_pazienti = $conn->query("SELECT * FROM anagrafica_pazienti");
+$res_dottore  = $conn->query("SELECT * FROM anagrafica_dottori");
 ?>
 
 <!DOCTYPE html>
@@ -107,7 +99,7 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
                 
                 <div class="card mb-5 shadow-sm">
                     <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">Añadir Nuevo Paciente</h4>
+                        <h4 class="mb-0">Aggiungi Nuovo Paciente</h4>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST" class="row g-3">
@@ -149,7 +141,7 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
                             </div>
                             
                             <div class="col-12 text-end">
-                                <button type="submit" name="btn_guardar" class="btn btn-success">Guardar Paciente</button>
+                                <button type="submit" name="btn_guardar" class="btn btn-success"> Aggiungi Paziente</button>
                             </div>
                         </form>
                     </div>
@@ -181,10 +173,6 @@ $res_dottore = $conn->query("SELECT * FROM dottore");
                     </table>
                 </div>
         </div>
-
-            <a href="javascript:void(0)" class="nav-link" onclick="showPage('pazienti', this)">Pazienti</a>`
-
-
         <div id="professionisti" class="content-section d-none">
             <div class="container bg-white p-5 shadow-sm rounded-4">
                 <h1 class="display-5 fw-bold text-dark">Professionisti</h1>
