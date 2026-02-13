@@ -128,7 +128,7 @@ $res_dottore  = $conn->query("SELECT * FROM anagrafica_dottori");
                                 <input type="text" name="luogo" class="form-control" required>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Indirizzo</label>
+                                <label class="form-label">Residenza</label>
                                 <input type="text" name="indirizzo" class="form-control" required>
                             </div>
                             <div class="col-md-2">
@@ -146,9 +146,7 @@ $res_dottore  = $conn->query("SELECT * FROM anagrafica_dottori");
                         </form>
                     </div>
                 </div>
-
                 <hr class="my-5">
-
                 <h2 class="h4 fw-bold mb-3"> Pazienti Registrati</h2>
                 <div class="table-responsive">
                     <table class="table table-hover mt-4">
