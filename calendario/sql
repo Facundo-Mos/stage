@@ -1,0 +1,11 @@
+CREATE DATABASE calendario_db;
+USE calendario_db;
+
+CREATE TABLE tareas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    fecha_inicio DATETIME NOT NULL,
+    color VARCHAR(20) DEFAULT '#3788d8',
+    completada TINYINT(1) DEFAULT 0
+);

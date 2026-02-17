@@ -1,0 +1,16 @@
+#wrapper {
+    overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    transition: margin .25s ease-out;
+}
+
+.accordion-button::after {
+    filter: invert(1); /* Hace que la flechita del menú sea blanca */
+}
+
+.nav-link:hover {
+    background-color: #495057;
+}
