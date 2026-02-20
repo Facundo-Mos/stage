@@ -16,8 +16,8 @@
                 </h2>
                 <div id="collapsePacientes" class="accordion-collapse collapse" data-bs-parent="#accordionSidebar">
                     <div class="accordion-body p-0 ps-4">
-                        <a href="#" class="nav-link text-white-50 py-2" data-page="gestione-pazienti\gestione">Gestione Pazienti</a>
-                        <a href="#" class="nav-link text-white-50 py-2" data-page="gestione-pazienti\buscar_pacientes">Lista dei Pazienti</a>
+                        <a href="#" class="nav-link text-white-50 py-2" data-page="gestione-pazienti\gestione-p">Gestione Pazienti</a>
+                        <a href="#" class="nav-link text-white-50 py-2" data-page="gestione-pazienti\index_pazienti">Lista dei Pazienti</a>
                     </div>
                 </div>
             </div>

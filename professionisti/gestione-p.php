@@ -1,7 +1,7 @@
 <?php
 require_once 'config.php'; 
 
-// --- LOGICA DI ELABORAZIONE (Resta uguale alla tua, aggiungiamo solo un feedback) ---
+// --- LOGICA DI ELABORAZIONE ---
 $messaggio = "";
 $azione = $_POST['azione'] ?? '';
 
@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute(mappaDatiPost($_POST));
             $messaggio = "<div class='alert alert-success'>Record inserito con successo!</div>";
         }
-        // ... (puoi mantenere qui anche modifica ed elimina come nel tuo codice)
     } catch (Exception $e) {
         $messaggio = "<div class='alert alert-danger'>Errore: " . $e->getMessage() . "</div>";
     }
@@ -47,18 +46,6 @@ function mappaDatiPost($post) {
     ];
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gestione Anagrafica Professionisti</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="professionisti\style1.css">
-</head>
-<body>
 
 <div class="container">
     <div class="form-container mx-auto">
@@ -94,7 +81,6 @@ function mappaDatiPost($post) {
                     <label class="form-label">Nominativo Completo</label>
                     <input type="text" name="nominativo" class="form-control" required placeholder="Nome e Cognome o Ragione Sociale">
                 </div>
-
             </div>
 
             <div class="section-header">Indirizzo e Residenza</div>
@@ -156,7 +142,3 @@ function mappaDatiPost($post) {
         </form>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

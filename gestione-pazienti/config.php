@@ -1,8 +1,8 @@
 <?php
 $host = "ramsoft.ddns.net";
 $user = "facundo"; 
-$pass = "Abc458765Bca!";     
-$db   = "a_fisioq"; // 
+$pass = "Abc458765Bca!";
+$db   = "a_fisioq";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
